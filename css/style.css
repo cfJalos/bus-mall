@@ -1,0 +1,9 @@
+#randomPhoto li img{
+  height: 375px;
+  width: 300px;
+  
+}
+
+#randomPhoto {
+  display: flex;
+}
