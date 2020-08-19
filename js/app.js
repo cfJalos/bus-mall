@@ -39,7 +39,6 @@ new Product('img/unicorn.jpg', 'unicorn');
 new Product('img/usb.gif', 'usb');
 new Product('img/water-can.jpg', 'waterCan');
 new Product('img/wine-glass.jpg', 'wineGlass');
-new Product('img/wireframe.png', 'wireFrame');
 
 
 // helper function - got this from mdn
@@ -63,10 +62,16 @@ if(uniqueImage.length > 6) {
   uniqueImage.shift();
 }
 
+
 var chosenImage = productsArray[randomIndex];
+productsArray[randomIndex].shown++;
 buildElements(chosenImage);
 
-}
+
+
+  }
+
+
 
 // <======================== Build Elements in HTML =========================>
 
@@ -92,51 +97,187 @@ randomImage();
 randomImage();
 randomImage();
 
-// function handleClick(event) {
-//   var alt = event.target.alt;
-  
-//   for (var i = 0; i < parentArray.length; i++) {
-//     var alt = event.target.alt;
-//     parentArray[i].innerHTML = '';
-//   }
-//   console.log('this is my event.target.alt', event.target.alt)
-//   randomImage();
-
-// parentSection.addEventListener('click', handleClick);
 // <============================ Event Listener ===============================>
+
 
 function handleSubmit(event){
   event.preventDefault();
-  console.log('test')
   totalClicks++;
   // collect information from the vote
   var alt = event.target.value;
-  
+  console.log(productsArray);
   for(var i=0; i<productsArray.length; i++){
     if(alt === productsArray[i].alt){
       productsArray[i].clicks++;
-      productAsrray[i].shown++;
-      console.log(productsArray[i]);
+    } else if (uniqueImage.includes(productsArray[i])){
+      productsArray[i].shown++;
     }
+  }
+ 
     // run that information through the constructor 
     parentSection.innerHTML = '';
     
-    var button = document.createElement('button');
-    button.setAttribute('type', 'submit');
-    button.innerText = 'Vote!'
+    // var button = document.createElement('button');
+    // button.setAttribute('type', 'submit');
+    // button.innerText = 'Vote!'
   
-    parentSection.appendChild(button);
+    // parentSection.appendChild(button);
     randomImage();
     randomImage();
     randomImage();
     if (totalClicks>=maxClicks) {
-      parentSection.removeEventListener('submit', handleSubmit);
+      parentSection.removeEventListener('click', handleSubmit);
+      var productList = document.getElementById('randomPhoto');
+      alert('25 votes reached')
+      createChart();
       for (var j = 0; j < productsArray.length; j++){
         var li = document.createElement('li');
-        li.textContent = productsArray[j].title + ' had ' + productsArray[j].clicks + ' votes and was shown ' + productsArray[j].shown + ' times.';
+        li.textContent = productsArray[j].alt + ' had ' + productsArray[j].clicks + ' votes and was shown ' + productsArray[j].shown + ' times.';
         finalList.appendChild(li);
       }  
     }
  } 
+ 
+parentSection.addEventListener('click', handleSubmit);
+
+//<====================== chart.js =======================>
+function createChart() {
+
+  // generate product names for the chart
+  var labelArray = [];
+  var productData = [];
+  var productDisplayData = [];
+
+  for(var i = 0; i < productsArray.length; i++){
+
+    labelArray.push(productsArray[i].alt);
+    productData.push(productsArray[i].clicks);
+    productDisplayData.push(productsArray[i].shown);
+
+  }
+console.log(productData);
+
+  var ctx1 = document.getElementById('voteChart').getContext('2d');
+  var voteChart = new Chart(ctx1, {
+    type: 'bar',
+    data: {
+      labels: labelArray,
+      datasets: [{
+        label: '# of Votes',
+        data: productData,
+        backgroundColor: [
+          'rgba(255, 99, 132, 0.8)',
+          'rgba(54, 162, 235, 0.8)',
+          'rgba(255, 206, 86, 0.8)',
+          'rgba(75, 192, 192, 0.8)',
+          'rgba(153, 102, 255, 0.8)',
+          'rgba(255, 159, 64, 0.8)',
+          'rgba(25, 108, 118, 0.4)',
+          'rgba(55, 3, 179, 0.8)',
+          'rgba(207, 180, 12, 0.6)',
+          'rgba(163, 96, 172, 0.6)',
+          'rgba(131, 253, 181, 0.4)',
+          'rgba(193, 93, 104, 0.7)',
+          'rgba(252, 155, 19, 0.7)',
+          'rgba(66, 62, 133, 0.8)',
+          'rgba(220, 123, 101, 1)',
+          'rgba(130, 83, 63, 0.4)',
+          'rgba(233, 69, 238, 0.8)',
+          'rgba(132, 72, 6, 1)',
+          'rgba(6, 43, 125, 0.9)',
+          'rgba(147, 13, 90, 0.5)'
+
+
+        ],
+        borderColor: [
+          'rgba(255, 99, 132, 1)',
+          'rgba(54, 162, 235, 1)',
+          'rgba(255, 206, 86, 1)',
+          'rgba(75, 192, 192, 1)',
+          'rgba(153, 102, 255, 1)',
+          'rgba(255, 159, 64, 1)',
+          'rgba(25, 108, 118, 0.4)',
+          'rgba(55, 3, 179, 0.8)',
+          'rgba(207, 180, 12, 0.6)',
+          'rgba(163, 96, 172, 0.6)',
+          'rgba(131, 253, 181, 0.4)',
+          'rgba(193, 93, 104, 0.7)',
+          'rgba(252, 155, 19, 0.7)',
+          'rgba(66, 62, 133, 0.1)',
+          'rgba(220, 123, 101, 1)',
+          'rgba(130, 83, 63, 0.4)',
+          'rgba(233, 69, 238, 0.8)',
+          'rgba(132, 72, 6, 1)',
+          'rgba(6, 43, 125, 0.9)',
+          'rgba(147, 13, 90, 0.5)'
+        ],
+        borderWidth: 1
+      },
+      {
+        label: '# of times displayed',
+        data: productDisplayData,
+        backgroundColor: [
+          'rgba(255, 99, 132, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(255, 206, 86, 0.2)',
+          'rgba(75, 192, 192, 0.2)',
+          'rgba(153, 102, 255, 0.2)',
+          'rgba(255, 159, 64, 0.2)',
+          'rgba(25, 108, 118, 0.2)',
+          'rgba(55, 3, 179, 0.2)',
+          'rgba(207, 180, 12, 0.2)',
+          'rgba(163, 96, 172, 0.2)',
+          'rgba(131, 253, 181, 0.2)',
+          'rgba(193, 93, 104, 0.2)',
+          'rgba(252, 155, 19, 0.2)',
+          'rgba(66, 62, 133, 0.2)',
+          'rgba(220, 123, 101, 0.2)',
+          'rgba(130, 83, 63, 0.2)',
+          'rgba(233, 69, 238, 0.2)',
+          'rgba(132, 72, 6, 0.2)',
+          'rgba(6, 43, 125, 0.2)',
+          'rgba(147, 13, 90, 0.2)'
+
+
+        ],
+        borderColor: [
+          'rgba(255, 99, 132, 1)',
+          'rgba(54, 162, 235, 1)',
+          'rgba(255, 206, 86, 1)',
+          'rgba(75, 192, 192, 1)',
+          'rgba(153, 102, 255, 1)',
+          'rgba(255, 159, 64, 1)',
+          'rgba(25, 108, 118, 0.4)',
+          'rgba(55, 3, 179, 0.8)',
+          'rgba(207, 180, 12, 0.6)',
+          'rgba(163, 96, 172, 0.6)',
+          'rgba(131, 253, 181, 0.4)',
+          'rgba(193, 93, 104, 0.7)',
+          'rgba(252, 155, 19, 0.7)',
+          'rgba(66, 62, 133, 0.1)',
+          'rgba(220, 123, 101, 1)',
+          'rgba(130, 83, 63, 0.4)',
+          'rgba(233, 69, 238, 0.8)',
+          'rgba(132, 72, 6, 1)',
+          'rgba(6, 43, 125, 0.9)',
+          'rgba(147, 13, 90, 0.5)'
+        ],
+        borderWidth: 1
+      }]
+    },
+    options: {
+      scales: {
+        xAxes: [{
+          stacked: true
+        }],
+        yAxes: [{
+          ticks: {
+            beginAtZero: true,
+            stacked: true
+          }
+        }]
+      }
+    }
+  });
+
 }
-parentSection.addEventListener('submit', handleSubmit);
