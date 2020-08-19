@@ -12,18 +12,25 @@
 <main>
 <section>
   <form id="randomPhoto">
-    <ul>
-      <li id="product1"></li>
-      <li id="product2"></li>
-      <li id="product3"></li>
+    <ul id="finalList">
     </ul>
-    <button type="submit">Vote!</button>
+    <!-- <button type="submit">Vote!</button> -->
   </form>
 </section>
 </main>
+
+<div id="chart">
+
+  <canvas id="voteChart" width="200px" height="200px"></canvas>
+
+  <canvas id="numDisplayChart" width="400" height="400"></canvas>
+
+
+</div>
 <footer>
 
 </footer>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
 <script src="js/app.js"></script>
 </body>
 
