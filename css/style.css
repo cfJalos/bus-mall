@@ -1,9 +1,52 @@
+body {
+  margin: 0 auto;
+  text-align: center;
+}
+
 #randomPhoto img{
-  height: 375px;
+  height: 300px;
   width: 300px;
+  margin: 5px;
+  box-shadow: 
+  inset 0 -3em 3em rgba(0,0,0,0.1), 
+        0 0  0 0px rgb(255,255,255),
+        0.3em 0.3em 1em rgba(0,0,0,0.3);
   
+}
+
+#randomPhoto {
+  margin: 0 auto;
 }
 
 #randomPhoto ul {
   display: flex;
+  
+}
+
+header {
+  height: 100px;
+  max-width: 100%;
+  background-color: antiquewhite;
+  margin-bottom: 30px;
+  box-shadow: 
+  inset 0 -3em 3em rgba(0,0,0,0.1), 
+        0 0  0 0px rgb(255,255,255),
+        0.3em 0.3em 1em rgba(0,0,0,0.3);
+}
+
+canvas {
+    width: 400px;
+    height: 400px;
+
+}
+
+#chart {
+  height: 400px;
+  width: 400px;
+  text-align: center;
+  margin: 0 auto;
+  box-shadow: 
+  inset 0 -3em 3em rgba(0,0,0,0.1), 
+        0 0  0 0px rgb(255,255,255),
+        0.3em 0.3em 1em rgba(0,0,0,0.3);
 }
